@@ -5,7 +5,7 @@ Compatibility testing for various NodeJS and npm use cases
 ## Setup
 
 1. Have latest Bun 1.x installed
-1. Have latest NodeJS LTS installed
+1. Have latest NodeJS LTS installed (or run `nvm use`)
 1. Clone the repo
 
 - For Bun testing, run `bun i`
@@ -15,9 +15,10 @@ Compatibility testing for various NodeJS and npm use cases
 
 ## Demos
 
-### node-html-parser
+### ✅ node-html-parser
 
 Run the demo:
+
 - `$ bun node-html-parser.js`
 - `$ node node-html-parser.js`
 
@@ -53,3 +54,47 @@ Interim solution until we upgrade is to use this
 ```js
 import * as htmlparser from "node-html-parser";
 ```
+
+### ✅ Lit SSR
+
+> Note: cannot reproduce anymore!
+
+Run the demo:
+
+- `$ bun lit-ssr.js`
+- `$ node lit-ssr.js`
+
+Observed in initial [Bun testing](https://github.com/thescientist13/greenwood-lit-ssr/pull/31) that Lit SSR was failing.
+
+<details>
+  <pre>
+  ➜  greenwood-lit-ssr git:(main) ✗ bun run --bun build 
+      $ greenwood build
+      -------------------------------------------------------
+      Welcome to Greenwood (v0.31.1) ♻️
+      -------------------------------------------------------
+      Initializing project config
+      Initializing project workspace contexts
+      Generating graph of workspace files...
+      building from local sources...
+      200 |   #onClose(e) {
+      201 |     this.#onExitPromise = e.code, this.emit("exit", e.code);
+      202 |   }
+      203 |   #onError(event) {
+      204 |     let error = event?.error;
+      205 |       error = new Error(event.message, { cause: event });
+                          ^
+      error: 1 | /**
+      2 |  * @license
+      3 |  * Copyright 2017 Google LLC
+      4 |  * SPDX-License-Identifier: BSD-3-Clause
+      5 |  */
+      6 | const t=globalThis,i=t.trustedTypes,s=i?i.createPolicy("lit-html",{createHTML:t=>t}):void 0,e="$lit$",h=`lit$${Math.random().toFixed(9).slice(2)}$`,o="?"+h,n=`<${o}>`,r=void 0===t.document?{createTreeWalker:()=>({})}:document,l=()=>r.createComment(""),c=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a=Array.isArray,u=t=>a(t)||"function"==typeof t?.[Symbol.iterator],d="[ \t\n\f\r]",f=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,_=/>/g,m=RegExp(`>|${d}(?:([^\\s"'>=/]+)(${d}*=${d}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),p=/'/g,g=/"/g,$=/^(?:script|style|textarea|title)$/i,y=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=y(1),T=y(2),b=y(3),w=Symbol.for("lit-noChange"),E=Symbol.for("lit-nothing"),A=new WeakMap,C=r.createTreeWalker(r,129);function P(t,i){if(!a(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==s?s.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,o=[];let r,l=2===i?"":3===i?"":"",c=f;for(let i=0;i TypeError: r.createTreeWalker is not a function. (In 'r.createTreeWalker(r, 129)', 'r.createTreeWalker' is undefined)
+        at /Users/owenbuckley/Workspace/github/greenwood-lit-ssr/node_modules/lit-html/node/lit-html.js:6:750
+
+        at #onError (node:worker_threads:205:15)
+
+  Bun v1.2.2 (macOS arm64)
+  error: script "build" exited with code 1
+  </pre>
+</details>
