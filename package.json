@@ -8,7 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@apollo/server": "^4.11.3",
     "@lit-labs/ssr": "^3.3.1",
+    "apollo-server-express": "^2.26.0",
+    "apollo-server": "^2.21.0",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.10.1",
     "lit": "^3.2.1",
     "node-html-parser": "^7.0.1"
   }

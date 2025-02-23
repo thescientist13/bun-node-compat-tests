@@ -98,3 +98,45 @@ Observed in initial [Bun testing](https://github.com/thescientist13/greenwood-li
   error: script "build" exited with code 1
   </pre>
 </details>
+
+
+### ⚠️ Apollo GraphQL Server (Playground)
+
+> Looks like this can be resolved by upgrading to [@apollo/server v4](https://www.npmjs.com/package/@apollo/server)
+> Run `bun graphql-server-upgrade.js`
+
+1. Run the demo:
+    - `$ bun graphql-server.js`
+    - `$ node graphql-server.js`
+1. Then open `http://localhost:4000` (or just wait a few moments with the terminal open)
+
+Observed in initial [Bun testing](https://github.com/ProjectEvergreen/greenwood/pull/1308) that the Apollo GraphqQL Server would throw this error:
+
+<details>
+  <pre>
+  GraphQLServer started at http://localhost:4000/
+30 |         }
+31 |         var connectionHandler = (function (socket, request) {
+32 |             socket.upgradeReq = request;
+33 |             if (socket.protocol === undefined ||
+34 |                 (socket.protocol.indexOf(protocol_1.GRAPHQL_WS) === -1 && socket.protocol.indexOf(protocol_1.GRAPHQL_SUBSCRIPTIONS) === -1)) {
+35 |                 socket.close(1002);
+                            ^
+TypeError: socket.close is not a function. (In 'socket.close(1002)', 'socket.close' is undefined)
+      at connectionHandler (/Users/owenbuckley/Workspace/github/bun-node-compat-tests/node_modules/subscriptions-transport-ws/dist/server.js:35:24)
+      at emit (node:events:87:22)
+      at fetch (node:http:395:86)
+GET - / failed
+30 |         }
+31 |         var connectionHandler = (function (socket, request) {
+32 |             socket.upgradeReq = request;
+33 |             if (socket.protocol === undefined ||
+34 |                 (socket.protocol.indexOf(protocol_1.GRAPHQL_WS) === -1 && socket.protocol.indexOf(protocol_1.GRAPHQL_SUBSCRIPTIONS) === -1)) {
+35 |                 socket.close(1002);
+                            ^
+TypeError: socket.close is not a function. (In 'socket.close(1002)', 'socket.close' is undefined)
+      at connectionHandler (/Users/owenbuckley/Workspace/github/bun-node-compat-tests/node_modules/subscriptions-transport-ws/dist/server.js:35:24)
+      at emit (node:events:87:22)
+      at fetch (node:http:395:86)
+  </pre>
+</details>
